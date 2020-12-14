@@ -2,18 +2,44 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
+var hbs = require('express-hbs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// Use `.hbs` for extensions and find partials in `views/partials`.
+app.engine('hbs', hbs.express4({
+  partialsDir: path.join(__dirname, '/views/partials'),
+  // OPTIONAL settings
+  defaultLayout: path.join(__dirname, '/views/layouts/layout'),
+  extname: ".hbs",
+  layoutsDir: path.join(__dirname, '/views/layouts'),
+  // override the default compile
+  onCompile: function(exhbs, source, filename) {
+    var options;
+    if (filename && filename.indexOf('partials') > -1) {
+      options = {preventIndent: true};
+    }
+    return exhbs.handlebars.compile(source, options);
+  }
+}));
 
-app.use(logger('dev'));
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
+
+app.use(morgan(function (tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
