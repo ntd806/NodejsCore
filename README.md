@@ -1,5 +1,5 @@
-# betting
-betting core
+# Betting
+Betting core
 # Requirement
 * Nodejs is the version more than v10
 * Nodemon
