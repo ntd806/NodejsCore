@@ -6,6 +6,6 @@ betting core
 # Installing
 # Running
 * Starting with nodemon
-> 1. cd {path/to/projectroot}
+> 1. cd {path/to/rootproject}
 > 2. nodemon --exec npm start
 # Development
