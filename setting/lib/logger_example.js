@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const Logger = require('./services/logger_service')
+const Logger = require('./logger_service')
 const bodyParser = require('body-parser')
 const logger = new Logger('app')
 app.use(bodyParser.urlencoded({
   extended: false
 }))
 app.use(bodyParser.json())
-app.post('/test', (req, res) => {
+app.get('/test', (req, res) => {
   const body = req.body
   let error = {}
   // Adding body of the request as log data
