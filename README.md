@@ -1,7 +1,7 @@
 # betting
 betting core
 # Requirement
-* Nodejs is verions more than v10
+* Nodejs is verion more than v10
 * Nodemon
 # Installing
 # Running
